@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Zadanie1</string>
+    <string name="action_settings">Settings</string>
+    <string name="radiobutton">Sound1</string>
+    <string name="radiobutton2">Sound 2</string>
+    <string name="radiobutton3">Sound 3</string>
+    <string name="button1">Button</string>
+    <string name="button2">OK</string>
+    <string name="button3" >Button</string>
+    <string name="button4">Button</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+
+    <string-array name="people">
+        <item>Jan Kowalski</item>
+        <item>Krystyna Kowalska</item>
+        <item>Adam Buroski</item>
+        <item>Jakub Anonimowy</item>
+        <item>Iza Adamska</item>
+    </string-array>
+</resources>

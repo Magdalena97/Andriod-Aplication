@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL
+lista odnosników do dzwieków i obrazkow -->
+<resources>
+    <array name="sounds">
+        <item>@raw/mario</item>
+        <item>@raw/ring01</item>
+        <item>@raw/ring02</item>
+        <item>@raw/ring03</item>
+        <item>@raw/ring04</item>
+        <item>@raw/ringd</item>
+    </array>
+    <array name="avatars">
+        <item>@raw/avatar_1</item>
+        <item>@raw/avatar_2</item>
+        <item>@raw/avatar_3</item>
+    </array>
+</resources>
