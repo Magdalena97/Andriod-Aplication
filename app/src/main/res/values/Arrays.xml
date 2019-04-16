@@ -14,5 +14,9 @@ lista odnosników do dzwieków i obrazkow -->
         <item>@raw/avatar_1</item>
         <item>@raw/avatar_2</item>
         <item>@raw/avatar_3</item>
+        <item>@raw/avatar_32</item>
+        <item>@raw/avatar_4</item>
+        <item>@raw/avatar_43</item>
+        <item>@raw/avatar_46</item>
     </array>
 </resources>

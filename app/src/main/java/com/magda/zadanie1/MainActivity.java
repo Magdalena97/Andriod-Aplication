@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -38,6 +41,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        TypedArray sounds = getResources().obtainTypedArray(R.array.sounds);//pobieranie dzwieków do tablicy
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+        final FloatingActionButton play_button = (FloatingActionButton) findViewById(R.id.fab);
+        play_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (player.isPlaying()) {
+                    player.stop();
+                    play_button.setImageResource(R.drawable.ic_play);
+                } else {
+                    player.reset();
+                    try {
+                        player.setDataSource(getApplicationContext(),Uri.parse("android.resource://"  +  getPackageName()  +  "/"  +
+                                ((ArrayList<Integer>) contacts.get(contact_id)).get(2)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    player.prepareAsync();
+                    play_button.setImageResource(R.drawable.ic_stop);
+                }
+            }
+        });
+
 
         all_names = getResources().getStringArray(R.array.people);  //Tablica ze wszystkimi nazwiskami
         final TypedArray all_sounds = getResources().obtainTypedArray(R.array.sounds);  //Tablica z odnośnikami do id plików dźwiękowych
@@ -63,23 +97,25 @@ public class MainActivity extends AppCompatActivity {
         iv.setImageResource(R.raw.avatar_1);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(player!=null){
-                    player.release();
-                    player=null;
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(player!=null){
+//                    player.release();
+//                    player=null;
+//
+//                }else{
+//                   //Uri song= Uri.parse("android.resource://" + getPackageName() + "/" + ((ArrayList<Integer>) contacts.get(contact_id)).get(2));
+////                    player=MediaPlayer.create(,((ArrayList<Integer>) contacts.get(contact_id)).get(2));
+////                    player.start();
+////                    System.out.println("Zaczynam odtwarzanie dzwieku");
+//                }
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//            }
+//        });
 
-                }else{
-                    //player=MediaPlayer.create(this,sound.index);
-                    player.start();
-                    System.out.println("Zaczynam odtwarzanie dzwieku");
-                }
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-            }
-        });
         Button changesound = (Button) findViewById(R.id.button2);
         changesound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,4 +206,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    //Sounds
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        player.release();
+    }
 }
+
