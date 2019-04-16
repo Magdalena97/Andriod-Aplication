@@ -17,7 +17,7 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sound);
 
-        int sound_id = getIntent().getIntExtra("sound_id",R.raw.mario);
+        int sound_id = getIntent().getIntExtra("sound_id",0);
 
         final TypedArray all_sounds = getResources().obtainTypedArray(R.array.sounds);
         final RadioGroup radioGroup = findViewById(R.id.radioGroup);
@@ -31,12 +31,12 @@ public class Main2Activity extends AppCompatActivity {
 
                 int radioButtonID = radioGroup.getCheckedRadioButtonId();
                 View radioButton = radioGroup.findViewById(radioButtonID);
-                int idx = radioGroup.indexOfChild(radioButton);
+                int idx = radioGroup.indexOfChild(radioButton);  //numer wybranego buttona z radiogroup
 
-                System.out.println(idx);
+               // System.out.println(idx);
 
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("sound", idx);//wysywanie imienia do main activity
+                resultIntent.putExtra("sound", idx);//wysywanie sound do main activity
                 setResult(Activity.RESULT_OK,resultIntent);
                 finish();
             }

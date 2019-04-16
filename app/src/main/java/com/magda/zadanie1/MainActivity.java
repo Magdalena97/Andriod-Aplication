@@ -28,9 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int CONTACT_REQUEST = 1;
     public static final int SOUND_REQUEST = 2;
 
-    private int contact_id = 0;
+    private int contact_id = 0;//idenks aktualnie wybranego kontaktu
     private ArrayList contacts = new ArrayList<ArrayList<Integer>>();//lista z kontaktami
-    public static final int BUTTON_REQUEST = 1;
     private String[] all_names;
     private MediaPlayer player;
 
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         final TypedArray all_sounds = getResources().obtainTypedArray(R.array.sounds);  //Tablica z odnośnikami do id plików dźwiękowych
         TypedArray all_images = getResources().obtainTypedArray(R.array.avatars);  //Tablica z odnośnikami do id obrazków
 
-        for(int i=0; i<all_names.length;i++){
+        for(int i=0; i<all_names.length;i++){//nowy kontakt
             ArrayList<Integer> new_contact = new ArrayList<Integer>();
 
             int random_sound_number = new Random().nextInt(all_sounds.length());
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                          break;
                      }
                  }
-                 i.putExtra("sound_id", sound_id);//przeslanie dzwieku
+                 i.putExtra("sound_id", sound_id);//przeslanie dzwieku, index do tablicy ze wszystkimi sound
                  startActivityForResult(i, SOUND_REQUEST);
              }
          });
@@ -169,13 +168,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {//odpowiedzi z innych activity
         super.onActivityResult(requestCode, resultCode, data);
 
         TypedArray all_sounds = getResources().obtainTypedArray(R.array.sounds);
 
         switch(requestCode) {
-            case (CONTACT_REQUEST) : {
+            case (CONTACT_REQUEST) : {//modyfikacja contact po wybraniu innego
                 if (resultCode == Activity.RESULT_OK) {
                     String nameValue = data.getStringExtra("name");
                     for (int i=0; i<all_names.length; i++) {
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             }
-            case (SOUND_REQUEST): {
+            case (SOUND_REQUEST): { //modyfikacja sound po wybraniu innego
                 if (resultCode == Activity.RESULT_OK) {
                     int sound_index = data.getIntExtra("sound", 0);
 
